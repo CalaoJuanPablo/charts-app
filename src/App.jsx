@@ -1,29 +1,24 @@
 import React from 'react'
-import { PieChartComponent } from './components'
+import { PieChartComponent, LineChartComponent } from './components'
 import './App.scss'
 import { data } from './data'
-import { approvedReduce, pendingReduce, rejectedReduce } from './utils'
+import { serializeTotalAmountData, serializeTotalItemsData } from './helpers'
 
-const totalApproved = approvedReduce(data)
-const totalPending = pendingReduce(data)
-const totalRejected = rejectedReduce(data)
-
-const dataForPieChart = {
-	labels: ['Approved', 'Pending', 'Rejected'],
-	datasets: [
-		{
-			data: [totalApproved, totalPending, totalRejected],
-			backgroundColor: ['#36A2EB', '#FFCE56', '#FF6384'],
-			hoverBackgroundColor: ['#36A2EB', '#FFCE56', '#FF6384']
-		}
-	]
-}
+const dataForTotalAmount = serializeTotalAmountData(data)
+const dataForTotalItems = serializeTotalItemsData(data)
 
 export function App() {
 	return (
 		<div className="App">
 			<h1 className="App__title">Chats app</h1>
-			<PieChartComponent data={dataForPieChart} />
+			<PieChartComponent
+				data={dataForTotalAmount}
+				title="Suma de total amount por status"
+			/>
+			<LineChartComponent
+				data={dataForTotalItems}
+				title="Suma total de items por fecha y status"
+			/>
 		</div>
 	)
 }
