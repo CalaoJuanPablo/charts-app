@@ -1,28 +1,33 @@
-export function approvedReduce(data) {
-	const mapReduce = data
-		.filter((current) => current.status === 'APPROVED')
+import { filterAproved, filterPending, filterRejected } from './filterByState'
+
+export function approvedTotalAmount(data) {
+	const filteredData = filterAproved(data)
+
+	const mapReduce = filteredData
 		.map((current) => current.totalAmount)
-		.reduce((acum, current) => acum + current)
+		.reduce((acum, current) => acum + current, 0)
 		.toFixed(2)
 
 	return Number(mapReduce)
 }
 
-export function pendingReduce(data) {
-	const mapReduce = data
-		.filter((current) => current.status === 'PENDING')
+export function pendingTotalAmount(data) {
+	const filteredData = filterPending(data)
+
+	const mapReduce = filteredData
 		.map((current) => current.totalAmount)
-		.reduce((acum, current) => acum + current)
+		.reduce((acum, current) => acum + current, 0)
 		.toFixed(2)
 
 	return Number(mapReduce)
 }
 
-export function rejectedReduce(data) {
-	const mapReduce = data
-		.filter((current) => current.status === 'REJECTED')
+export function rejectedTotalAmount(data) {
+	const filteredData = filterPending(data)
+
+	const mapReduce = filteredData
 		.map((current) => current.totalAmount)
-		.reduce((acum, current) => acum + current)
+		.reduce((acum, current) => acum + current, 0)
 		.toFixed(2)
 
 	return Number(mapReduce)
